@@ -84,7 +84,8 @@ class GraphView: UIView {
         
         // MARK: - Creating a gradient for the graph
         
-//        context.saveGState()
+        // Saving state before clipping path
+        context.saveGState()
         
         guard let clippingPath = graphPath.copy() as? UIBezierPath else { return }
         
@@ -99,8 +100,25 @@ class GraphView: UIView {
         let graphEndPoint = CGPoint(x: margin, y: bounds.height)
         
         context.drawLinearGradient(gradient, start: graphStartPoint, end: graphEndPoint, options: [])
+        
+        // restore state
+        context.restoreGState()
+        
         graphPath.lineWidth = 2.0
         graphPath.stroke()
+        
+        // Draw the circles on top of the graph stroke
+        
+        for i in 0..<graphPoints.count {
+            var point  = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
+            point.x -= Constants.circleDiameter / 2
+            point.y -= Constants.circleDiameter / 2
+            
+            let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: Constants.circleDiameter, height: Constants.circleDiameter)))
+            circle.fill()
+        }
+        
+        // CIRCLES DO NOT LOOK VERY ROUND
     }
 
 }
