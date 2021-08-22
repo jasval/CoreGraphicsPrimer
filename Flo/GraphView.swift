@@ -4,7 +4,7 @@ import UIKit
 
 class GraphView: UIView {
     
-    private enum Constants {
+    enum Constants {
         static let cornerRadiusSize = CGSize(width: 8.0, height: 8.0)
         static let margin: CGFloat = 20.0
         static let topBorder: CGFloat = 60

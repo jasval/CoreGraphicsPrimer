@@ -10,6 +10,16 @@ class ViewController: UIViewController {
     var counterView: CounterView!
     var graphView: GraphView!
     var counterLabel: UILabel!
+    var titleLabel: UILabel!
+    var averageWaterDrunkLabel: UILabel!
+    var maxLabel: UILabel!
+    var minLabel: UILabel!
+    var stackView: UIStackView!
+    var averageWaterDrunk: Int = 0 {
+        didSet {
+            averageWaterDrunkLabel.text = "Average: \(averageWaterDrunk)"
+        }
+    }
     
     var isGraphViewShowing = true
     
@@ -18,6 +28,7 @@ class ViewController: UIViewController {
         
         drawViews()
         addActions()
+        setupGraphDisplay()
     }
     
     func addActions() {
@@ -80,6 +91,124 @@ class ViewController: UIViewController {
         counterLabel.text = String(counterView.counter)
         
         counterView.addSubview(counterLabel)
+        
+        titleLabel = UILabel(frame: .zero)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textAlignment = .natural
+        titleLabel.font = FontBook.graphFont.size(12)
+        titleLabel.textColor = .white
+        titleLabel.text = "Water Drunk"
+        averageWaterDrunkLabel = UILabel(frame: .zero)
+        averageWaterDrunkLabel.translatesAutoresizingMaskIntoConstraints = false
+        averageWaterDrunkLabel.textAlignment = .natural
+        averageWaterDrunkLabel.font = FontBook.graphFont.size(12)
+        averageWaterDrunkLabel.textColor = .white
+        averageWaterDrunkLabel.text = "Average: \(averageWaterDrunk)"
+        maxLabel = UILabel(frame: .zero)
+        maxLabel.translatesAutoresizingMaskIntoConstraints = false
+        maxLabel.textAlignment = .natural
+        maxLabel.font = FontBook.graphFont.size(12)
+        maxLabel.textColor = .white
+        maxLabel.text = "99"
+        minLabel = UILabel(frame: .zero)
+        minLabel.translatesAutoresizingMaskIntoConstraints = false
+        minLabel.textAlignment = .natural
+        minLabel.font = FontBook.graphFont.size(12)
+        minLabel.textColor = .white
+        minLabel.text = "0"
+        
+        let monday = UILabel()
+        monday.textAlignment = .center
+        monday.font = FontBook.graphFont.size(12)
+        monday.textColor = .white
+        monday.text = "M"
+        let tuesday = UILabel()
+        tuesday.textAlignment = .center
+        tuesday.font = FontBook.graphFont.size(12)
+        tuesday.textColor = .white
+        tuesday.text = "T"
+        let wednesday = UILabel()
+        wednesday.textAlignment = .center
+        wednesday.font = FontBook.graphFont.size(12)
+        wednesday.textColor = .white
+        wednesday.text = "W"
+        let thursday = UILabel()
+        thursday.textAlignment = .center
+        thursday.font = FontBook.graphFont.size(12)
+        thursday.textColor = .white
+        thursday.text = "T"
+        let friday = UILabel()
+        friday.textAlignment = .center
+        friday.font = FontBook.graphFont.size(12)
+        friday.textColor = .white
+        friday.text = "F"
+        let saturday = UILabel()
+        saturday.textAlignment = .center
+        saturday.font = FontBook.graphFont.size(12)
+        saturday.textColor = .white
+        saturday.text = "S"
+        let sunday = UILabel()
+        sunday.textAlignment = .center
+        sunday.font = FontBook.graphFont.size(12)
+        sunday.textColor = .white
+        sunday.text = "S"
+        stackView = UIStackView(
+            arrangedSubviews: [
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                saturday,
+                sunday
+            ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        
+        graphView.addSubview(titleLabel)
+        graphView.addSubview(averageWaterDrunkLabel)
+        graphView.addSubview(maxLabel)
+        graphView.addSubview(minLabel)
+        graphView.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: graphView.leadingAnchor, constant: GraphView.Constants.margin),
+            titleLabel.topAnchor.constraint(equalTo: graphView.topAnchor, constant: GraphView.Constants.margin),
+            averageWaterDrunkLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            averageWaterDrunkLabel.topAnchor.constraint(equalToSystemSpacingBelow: titleLabel.bottomAnchor, multiplier: 1.0),
+            stackView.topAnchor.constraint(equalTo: graphView.bottomAnchor, constant: -GraphView.Constants.margin),
+            stackView.leadingAnchor.constraint(equalTo: graphView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: graphView.trailingAnchor),
+            maxLabel.leadingAnchor.constraint(equalTo: graphView.trailingAnchor, constant: -GraphView.Constants.margin + 2),
+            maxLabel.centerYAnchor.constraint(equalTo: graphView.topAnchor, constant: GraphView.Constants.topBorder),
+            minLabel.leadingAnchor.constraint(equalTo: graphView.trailingAnchor, constant: -GraphView.Constants.margin + 2),
+            minLabel.centerYAnchor.constraint(equalTo: graphView.bottomAnchor, constant: -GraphView.Constants.bottomBorder)
+        ])
+    }
+    
+    func setupGraphDisplay() {
+        let maxDayIndex = stackView.arrangedSubviews.count - 1
+        
+        graphView.graphPoints[graphView.graphPoints.count - 1] = counterView.counter
+        
+        graphView.setNeedsDisplay()
+        maxLabel.text = "\(graphView.graphPoints.max() ?? 0)"
+        
+        averageWaterDrunk = graphView.graphPoints.reduce(0, +) / graphView.graphPoints.count
+        
+        let today = Date()
+        let calendar = Calendar.current
+        
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEEEE")
+        
+        for i in 0...maxDayIndex {
+            if let date = calendar.date(byAdding: .day, value: -i, to: today), let label = stackView.arrangedSubviews[maxDayIndex - i] as? UILabel {
+                label.text = formatter.string(from: date)
+            }
+        }
     }
 
     /// Introducing @IBDesignable --> 'Live Rendering' allows views to draw themselves more accurately in a storyboard by running draw(_:)
@@ -105,6 +234,7 @@ class ViewController: UIViewController {
         if isGraphViewShowing {
             UIView.transition(from: graphView, to: counterView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
         } else {
+            setupGraphDisplay()
             UIView.transition(from: counterView, to: graphView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
         }
         isGraphViewShowing.toggle()

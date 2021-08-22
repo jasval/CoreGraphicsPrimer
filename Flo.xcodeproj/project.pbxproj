@@ -15,6 +15,8 @@
 		DD97B90926D17B50009356FF /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90826D17B50009356FF /* PushButton.swift */; };
 		DD97B90B26D25147009356FF /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90A26D25147009356FF /* CounterView.swift */; };
 		DD97B90D26D27F64009356FF /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90C26D27F64009356FF /* GraphView.swift */; };
+		DD97B90F26D2CD2F009356FF /* FontBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90E26D2CD2F009356FF /* FontBook.swift */; };
+		DD97B91126D2DCFE009356FF /* IsFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B91026D2DCFE009356FF /* IsFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		DD97B90826D17B50009356FF /* PushButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
 		DD97B90A26D25147009356FF /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		DD97B90C26D27F64009356FF /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		DD97B90E26D2CD2F009356FF /* FontBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontBook.swift; sourceTree = "<group>"; };
+		DD97B91026D2DCFE009356FF /* IsFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				DD97B90826D17B50009356FF /* PushButton.swift */,
 				DD97B90A26D25147009356FF /* CounterView.swift */,
 				DD97B90C26D27F64009356FF /* GraphView.swift */,
+				DD97B90E26D2CD2F009356FF /* FontBook.swift */,
+				DD97B91026D2DCFE009356FF /* IsFont.swift */,
 			);
 			path = Flo;
 			sourceTree = "<group>";
@@ -148,8 +154,10 @@
 				DD97B90D26D27F64009356FF /* GraphView.swift in Sources */,
 				437AE1E81F02685B001EE6E4 /* ViewController.swift in Sources */,
 				437AE1E61F02685B001EE6E4 /* AppDelegate.swift in Sources */,
+				DD97B91126D2DCFE009356FF /* IsFont.swift in Sources */,
 				DD97B90926D17B50009356FF /* PushButton.swift in Sources */,
 				DD97B90B26D25147009356FF /* CounterView.swift in Sources */,
+				DD97B90F26D2CD2F009356FF /* FontBook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
