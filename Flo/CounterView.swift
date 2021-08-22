@@ -66,6 +66,32 @@ class CounterView: UIView {
         outlineColor.setStroke()
         outlinePath.lineWidth = Constants.lineWidth
         outlinePath.stroke()
+        
+        // MARK: - Adding the markers
+        
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        
+        context.saveGState()
+        outlineColor.setFill()
+        
+        let markerWidth: CGFloat = 5.0
+        let markerSize: CGFloat = 10.0
+        
+        let markerPath = UIBezierPath(rect: CGRect(x: -markerWidth / 2, y: 0, width: markerWidth, height: markerSize))
+        
+        context.translateBy(x: rect.width / 2, y: rect.height / 2)
+        
+        for i in 1...Constants.numberOfGlasses {
+            context.saveGState()
+            let angle = arcLengthPerGlass * CGFloat(i) + startAngle - .pi / 2
+            context.rotate(by: angle)
+            context.translateBy(x: 0, y: rect.height / 2 - markerSize)
+            
+            markerPath.fill()
+            context.restoreGState()
+        }
+        
+        context.restoreGState()
     }
     
     override func didAddSubview(_ subview: UIView) {
