@@ -14,6 +14,7 @@
 		437AE1F01F02685B001EE6E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 437AE1EE1F02685B001EE6E4 /* LaunchScreen.storyboard */; };
 		DD97B90926D17B50009356FF /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90826D17B50009356FF /* PushButton.swift */; };
 		DD97B90B26D25147009356FF /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90A26D25147009356FF /* CounterView.swift */; };
+		DD97B90D26D27F64009356FF /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B90C26D27F64009356FF /* GraphView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		437AE1F11F02685B001EE6E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD97B90826D17B50009356FF /* PushButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
 		DD97B90A26D25147009356FF /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
+		DD97B90C26D27F64009356FF /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				437AE1F11F02685B001EE6E4 /* Info.plist */,
 				DD97B90826D17B50009356FF /* PushButton.swift */,
 				DD97B90A26D25147009356FF /* CounterView.swift */,
+				DD97B90C26D27F64009356FF /* GraphView.swift */,
 			);
 			path = Flo;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD97B90D26D27F64009356FF /* GraphView.swift in Sources */,
 				437AE1E81F02685B001EE6E4 /* ViewController.swift in Sources */,
 				437AE1E61F02685B001EE6E4 /* AppDelegate.swift in Sources */,
 				DD97B90926D17B50009356FF /* PushButton.swift in Sources */,

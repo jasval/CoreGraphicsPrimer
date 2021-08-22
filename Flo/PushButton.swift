@@ -19,10 +19,25 @@ class PushButton: UIButton {
         return bounds.height / 2
     }
     
+    let isAddButton: Bool
+    
+    private var fillColor: UIColor {
+        isAddButton ? UIColor(red: 87/255, green: 218/255, blue: 213/255, alpha: 1.0) : UIColor(red: 238/255, green: 77/255, blue: 77/255, alpha: 1.0)
+    }
+    
+    init(isAddButton: Bool) {
+        self.isAddButton = isAddButton
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // When drawing on a view you are drawing in its drawing Core Graphics Context
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(ovalIn: rect)
-        UIColor.green.setFill()
+        fillColor.setFill()
         path.fill()
         
         
@@ -42,14 +57,16 @@ class PushButton: UIButton {
                             x: halfWidth + halfPlusWidth + Constants.halfPointShift,
                             y: halfHeight + Constants.halfPointShift))
         
-        plusPath.move(to: CGPoint(
-                        x: halfWidth + Constants.halfPointShift,
-                        y: halfHeight - halfPlusWidth + Constants.halfPointShift))
-              
-        plusPath.addLine(to: CGPoint(
+        if isAddButton {
+            plusPath.move(to: CGPoint(
                             x: halfWidth + Constants.halfPointShift,
-                            y: halfHeight + halfPlusWidth + Constants.halfPointShift))
-        
+                            y: halfHeight - halfPlusWidth + Constants.halfPointShift))
+                  
+            plusPath.addLine(to: CGPoint(
+                                x: halfWidth + Constants.halfPointShift,
+                                y: halfHeight + halfPlusWidth + Constants.halfPointShift))
+        }
+
         UIColor.white.setStroke()
         
         plusPath.stroke()
