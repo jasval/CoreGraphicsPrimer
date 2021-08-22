@@ -117,8 +117,24 @@ class GraphView: UIView {
             let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: Constants.circleDiameter, height: Constants.circleDiameter)))
             circle.fill()
         }
+        // CIRCLES DO NOT LOOK VERY ROUND!
         
-        // CIRCLES DO NOT LOOK VERY ROUND
+        // Draw horizontal graph lines on the top of everything
+        let linePath = UIBezierPath()
+        
+        linePath.move(to: CGPoint(x: margin, y: topBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: topBorder))
+        
+        linePath.move(to: CGPoint(x: margin, y: graphHeight / 2 + topBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: graphHeight / 2 + topBorder))
+        
+        linePath.move(to: CGPoint(x: margin, y: height - bottomBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: height - bottomBorder))
+        let color = UIColor(white: 1.0, alpha: Constants.colorAlpha)
+        color.setStroke()
+        
+        linePath.lineWidth = 1.0
+        linePath.stroke()
     }
 
 }
