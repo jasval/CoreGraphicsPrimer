@@ -6,26 +6,15 @@ class ViewController: UIViewController {
     
     var addButton: PushButton!
     var counterView: CounterView!
+    var counterLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        drawButton()
         drawCounter()
-    }
-    
-    func drawButton() {
-        addButton = PushButton()
-        addButton.backgroundColor = .clear
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(addButton)
-        
-        NSLayoutConstraint.activate([
-            addButton.heightAnchor.constraint(equalToConstant: 50),
-            addButton.widthAnchor.constraint(equalToConstant: 50),
-            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        drawButton()
+
+        addButton.addTarget(self, action: #selector(addButtonPushed(_:)), for: .touchUpInside)
     }
     
     func drawCounter() {
@@ -39,11 +28,38 @@ class ViewController: UIViewController {
             counterView.heightAnchor.constraint(equalToConstant: 230),
             counterView.widthAnchor.constraint(equalToConstant: 230),
             counterView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            counterView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: 40)
+            counterView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        counterLabel = UILabel()
+        counterLabel.font = UIFont.systemFont(ofSize: 36)
+        counterLabel.textAlignment = .center
+        counterLabel.text = String(counterView.counter)
+        
+        counterView.addSubview(counterLabel)
+    }
+
+    func drawButton() {
+        addButton = PushButton()
+        addButton.backgroundColor = .clear
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(addButton)
+        
+        NSLayoutConstraint.activate([
+            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.widthAnchor.constraint(equalToConstant: 50),
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addButton.topAnchor.constraint(equalTo: counterView.bottomAnchor, constant: 40)
         ])
     }
     
+
     /// Introducing @IBDesignable --> 'Live Rendering' allows views to draw themselves more accurately in a storyboard by running draw(_:)
     
+    // MARK: - Actions
     
+    @objc func addButtonPushed(_ sender: PushButton?) {
+        counterView.counter += 1
+        counterLabel.text = String(counterView.counter)
+    }
 }

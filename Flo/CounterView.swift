@@ -14,9 +14,15 @@ class CounterView: UIView {
         }
     }
     
-    var counter: Int = 5
-    var outlineColor: UIColor = UIColor.blue
-    var counterColor: UIColor = UIColor.orange
+    var counter: Int = 0 {
+        didSet {
+            if counter <= Constants.numberOfGlasses {
+                setNeedsDisplay()
+            }
+        }
+    }
+    var outlineColor: UIColor = UIColor(red: 34/255, green: 110/255, blue: 100/255, alpha: 1.0)
+    var counterColor: UIColor = UIColor(red: 87/255, green: 218/255, blue: 213/255, alpha: 1.0)
     
 
     override func draw(_ rect: CGRect) {
@@ -35,6 +41,39 @@ class CounterView: UIView {
         path.lineWidth = Constants.arcWidth
         counterColor.setStroke()
         path.stroke()
+        
+        
+        /// Draw the outline
+        // Ensuring it is positive
+        let angleDiff: CGFloat = 2 * .pi - startAngle + endAngle
+        // then calculate the arc for each single glass
+        let arcLengthPerGlass = angleDiff / CGFloat(Constants.numberOfGlasses)
+        // then multiply out by the actual glasses drunk
+        let outlineEndAngle = arcLengthPerGlass * CGFloat(counter) + startAngle
+        
+        ///2 - Draw the outer arc
+        let outerArcRadius = bounds.width / 2 - Constants.halfOfLineWidth
+        let outlinePath = UIBezierPath(arcCenter: center, radius: outerArcRadius, startAngle: startAngle, endAngle: outlineEndAngle, clockwise: true)
+        
+        ///3 - Draw the inner arc
+        
+        let innerArcRadius = bounds.width / 2 - Constants.arcWidth + Constants.halfOfLineWidth
+        // Adds an inner arc to the first arc. It has the same angles but draws in reverse. That’s why clockwise was set to false. Also, this draws a line between the inner and outer arc automatically.
+        outlinePath.addArc(withCenter: center, radius: innerArcRadius, startAngle: outlineEndAngle, endAngle: startAngle, clockwise: false)
+        
+        outlinePath.close()
+        
+        outlineColor.setStroke()
+        outlinePath.lineWidth = Constants.lineWidth
+        outlinePath.stroke()
+    }
+    
+    override func didAddSubview(_ subview: UIView) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            subview.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            subview.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
     }
 
 }
