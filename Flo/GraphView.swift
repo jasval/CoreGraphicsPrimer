@@ -82,6 +82,25 @@ class GraphView: UIView {
         
         graphPath.stroke()
         
+        // MARK: - Creating a gradient for the graph
+        
+//        context.saveGState()
+        
+        guard let clippingPath = graphPath.copy() as? UIBezierPath else { return }
+        
+        clippingPath.addLine(to: CGPoint(x: columnXPoint(graphPoints.count - 1), y: height))
+        clippingPath.addLine(to: CGPoint(x: columnXPoint(0), y: height))
+        clippingPath.close()
+        
+        clippingPath.addClip()
+        
+        let highestYPoint = columnYPoint(maxValue)
+        let graphStartPoint = CGPoint(x: margin, y: highestYPoint)
+        let graphEndPoint = CGPoint(x: margin, y: bounds.height)
+        
+        context.drawLinearGradient(gradient, start: graphStartPoint, end: graphEndPoint, options: [])
+        graphPath.lineWidth = 2.0
+        graphPath.stroke()
     }
 
 }
