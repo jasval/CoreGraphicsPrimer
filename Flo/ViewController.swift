@@ -8,7 +8,10 @@ class ViewController: UIViewController {
     var addButton: PushButton!
     var minusButton: PushButton!
     var counterView: CounterView!
+    var graphView: GraphView!
     var counterLabel: UILabel!
+    
+    var isGraphViewShowing = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,18 +23,24 @@ class ViewController: UIViewController {
     func addActions() {
         addButton.addTarget(self, action: #selector(buttonPushed(_:)), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(buttonPushed(_:)), for: .touchUpInside)
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(counterViewTap(_:))))
     }
     
     func drawViews() {
         containerView = UIView(frame: .zero)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .yellow
+        containerView.backgroundColor = .clear
         view.addSubview(containerView)
         
         counterView = CounterView()
-        counterView.backgroundColor = .white
+        counterView.backgroundColor = .clear
         counterView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(counterView)
+        
+        graphView = GraphView()
+        graphView.backgroundColor = .clear
+        graphView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(graphView)
         
         addButton = PushButton(isAddButton: true)
         minusButton = PushButton(isAddButton: false)
@@ -51,6 +60,10 @@ class ViewController: UIViewController {
             counterView.widthAnchor.constraint(equalToConstant: 230),
             counterView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             counterView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            graphView.heightAnchor.constraint(equalToConstant: 230),
+            graphView.widthAnchor.constraint(equalToConstant: 300),
+            graphView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            graphView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             addButton.heightAnchor.constraint(equalToConstant: 100),
             addButton.widthAnchor.constraint(equalToConstant: 100),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -82,5 +95,18 @@ class ViewController: UIViewController {
             }
         }
         counterLabel.text = String(counterView.counter)
+        
+        if isGraphViewShowing {
+            counterViewTap(nil)
+        }
+    }
+    
+    @objc func counterViewTap(_ gesture: UITapGestureRecognizer?) {
+        if isGraphViewShowing {
+            UIView.transition(from: graphView, to: counterView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+        } else {
+            UIView.transition(from: counterView, to: graphView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        }
+        isGraphViewShowing.toggle()
     }
 }
